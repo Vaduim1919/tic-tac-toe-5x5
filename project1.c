@@ -1,16 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-char matrix[5][5];  //двовимірна матриця 5 на 5
+char matrix[5][5];  //two-dimensional matrix 5 by 5
 char check(void);
 void init_matrix(void);
-void get_player_move(void);//хід гравця
-void get_computer_move(void);//хід\ ПК
-void disp_matrix(void);// Матриця на дасплей
+void get_player_move(void);//the player's move
+void get_computer_move(void);//move \ PC
+void disp_matrix(void);// Matrix on the display
 
 
 
-int main(void) //головна
+int main(void) //home
 {
   char done; 
 
@@ -23,12 +23,12 @@ int main(void) //головна
   do {
     disp_matrix();
     get_player_move();
-    done = check(); /* подивиться, чи переможець */
-    if(done!= ' ') break; /* переможець!*/
+    done = check(); /* see if the winner */
+    if(done!= ' ') break; /* winner!*/
     get_computer_move();
-    done = check(); /* чи переможець */
+    done = check(); /*or winner*/
   } while(done== ' ');
-disp_matrix(); /* показати кінцеві позиції */
+disp_matrix(); /* show end positions */
 
   if(done=='X') printf("You won!\n");
   else printf("I won!!!!\n");
@@ -37,7 +37,7 @@ disp_matrix(); /* показати кінцеві позиції */
   return 0;
 }
 
-/* Ініціалізація матриці. */
+/* Matrix initialization. */
 void init_matrix(void)
 {
   int i, j;
@@ -46,7 +46,7 @@ void init_matrix(void)
     for(j=0; j<5; j++) matrix[i][j] =  ' ';
 }
 
-/* хід гравця. */
+/* the player's move. */
 void get_player_move(void)
 {
   int x, y;
@@ -54,20 +54,20 @@ void get_player_move(void)
 
 while(1)
 {
-  printf("Enter X,Y coordinates for your move: ");// ввести координати
+  printf("Enter X,Y coordinates for your move: ");//enter coordinates
   
   do{
   	x1=getch();
-  }while(x1<'1' || x1>'5'); // фільтир лівих клавіш мінімальне число 1 максимальне 5 по x
+  }while(x1<'1' || x1>'5'); // left key filter minimum number 1 maximum 5 by x
   printf("%c ",x1);
   do{
   	y1=getch();
   }while(y1<'1' || y1>'5');
   printf("%c\n",y1);
-  x=x1-'0'-1; y=y1-'0'-1; // фільтир лівих клавіш мінімальне число 1 максимальне 5  по y
+  x=x1-'0'-1; y=y1-'0'-1; // filter left keys minimum number 1 maximum 5 by y
 
   if(matrix[x][y]!= ' '){
-    printf("Invalid move, try again.\n"); // недійсний хід
+    printf("Invalid move, try again.\n"); // invalid move
     
   }
   else break;
@@ -75,10 +75,10 @@ while(1)
   matrix[x][y] = 'X';
 }
 
-/* рух від комп’ютера. */
+/* movement from the computer. */
 void get_computer_move(void)
 {
-  int i, j; // рандомне заповнення комірок
+  int i, j; // random filling of cells
   while(1){
   	i=rand()%5;
   	j=rand()%5;
@@ -89,7 +89,7 @@ void get_computer_move(void)
   }    
 }
 
-/* матриця на екран. */
+/* matrix on the screen. */
 void disp_matrix(void)
 {
   int t;
@@ -101,24 +101,24 @@ void disp_matrix(void)
   printf("\n");
 }
 
-/* Подивіться, чи є переможець. */
+/* See if there is a winner. */
 char check(void)
 {
   int i;
 
-  for(i=0; i<5; i++)  /* рядки */
+  for(i=0; i<5; i++)  /* lines */
     if(matrix[i][0]==matrix[i][1] &&
        matrix[i][0]==matrix[i][2] &&
        matrix[i][0]==matrix[i][3] &&
        matrix[i][0]==matrix[i][4]) return matrix[i][0];
 
-  for(i=0; i<5; i++)  /* колона */
+  for(i=0; i<5; i++)  /* column */
     if(matrix[0][i]==matrix[1][i] &&
        matrix[0][i]==matrix[2][i] &&
        matrix[0][i]==matrix[3][i] &&
        matrix[0][i]==matrix[4][i]) return matrix[0][i];
 
-  /* діагональ */
+  /* diagonal */
   if(matrix[0][0]==matrix[1][1] &&
      matrix[1][1]==matrix[2][2] &&
      matrix[2][2]==matrix[3][3] &&
